@@ -1,9 +1,10 @@
 # Project 3
 
-Jake Andrasovsky
-Lakshmi Prasana Rangam
-Jua A Han
-Leah Stucky
+Group members
+* Jake Andrasovsky
+* Lakshmi Prasana Rangam
+* Jua Han
+* Leah Stucky
 
 ## Project Overview:
 We intend to create several models to predict academic achievement based off the various factors we find are most influential. We will run analysis on the data and provide some visualizations. We will deploy our findings on Heroku and include a form where the user can input new data that will run through our model and predict the grade score.
