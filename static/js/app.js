@@ -1,44 +1,60 @@
-/// Assign the data from `data.js` to a descriptive variable
-var tableData = data;
+var button = d3.select("button")
 
-// YOUR CODE HERE!
-// reference the tbody
-var tbody = d3.select("tbody");
+button.on("click", runEnter)
 
-// update the table with data
-function updateTable(data){
-    // clears the data of the current table   
-    tbody.html("");
-    // stop the page from refresh
-   // d3.event.preventDefault();
-    // Create table structure in the html file and insert each "data" object
-    data.forEach((row) => {
-    // for each "element" in the object create a row
-    var tablerow = tbody.append("tr");
-    // below "object" becomes the targetet array (element)
-    Object.values(row).forEach((value)=> {
-    // console.log(`The key is: ${row} and the value is: ${value}`);
-    var tablecell= tablerow.append("td");
-    // adds the "value" to each row in the table
-    tablecell.text(value);
-    }    
-    );   
-    });
+function runEnter(event) {
+
+    event.preventDefault();
+
+    var freetimeEl = d3.select("#freetime")
+    var ageEl = d3.select("#age")
+    var healthEl = d3.select('#health')
+    var WalcEl = d3.select("#Walc")
+    var gooutEl = d3.select('#goout')
+
+    var freetime = freetimeEl.property("value")
+    var age = ageEl.property("value")
+    var health = healthEl.property("value")
+    var Walc = WalcEl.property("value")
+    var goout = gooutEl.property("value")
+
+    var responses = [freetime, age, health, Walc, goout]
+
+    // console.log(responses);
+    
+    d3.json("/predict",{
+        method: "POST",
+        body: JSON.stringify({responses: responses}),
+        headers: {
+            "content-type": "application/json"
+        }
+    }).then(response => {
+        // console.log("Prediction:",response)
+        var data = [
+            {
+                domain: { x: [0, 1], y: [0, 1] },
+                value: response.result,
+                title: { text: "Student Performance" },
+                type: "indicator",
+                mode: "gauge+number",
+                delta: { reference: response.result },
+                gauge: {
+                    bar: { color: "#1b3146" },
+                    axis: { range: [0, 4] },
+                    steps: [
+                        { range: [0, 1], color: "#DCDCDC" },
+                        { range: [1, 2], color: "#D3D3D3" },
+                        { range: [2, 3], color: "#C0C0C0" },
+                        { range: [3, 4], color: "#A9A9A9" }
+                    ]
+                } 
+            }
+        ];
+        
+        var layout = { width: 400, height: 300, margin: { t: 0, b: 0 } };
+
+        Plotly.newPlot('gauge', data, layout);
+
+        d3.select("#recommendation").insert("p").html(`<span>The predicted final grade level is ${response.result}.</span>`);
+    })
 }
-
-// filter the table 
-function filterTable(){
-    var filterData = tableData;
-    // Select the input element and  Get the value property of the input elements
-    var date = d3.select("#datetime").property("value");
-    //  Create if statements for the filter
-    if (date){
-        filterData = filterData.filter(result => result.datetime === date);
-        updateTable(filterData);
-   } 
-
-}
-// runs when button is clicked 
-d3.select("#filter-btn").on("click",filterTable);
-updateTable(tableData);
-
