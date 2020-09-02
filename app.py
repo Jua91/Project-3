@@ -7,7 +7,18 @@ model = load('BestLg.joblib')
 
 @app.route("/")
 def home():
+    return render_template("index.html")
+
+
+@app.route("/model")
+def prediction():
     return render_template("predict.html")
+
+
+@app.route("/summary")
+def summary():
+    return render_template("summary.html")
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -31,8 +42,6 @@ def predict():
 @app.route("/visualizations")
 def viz():
     return render_template("visualizations.html")
-    
-    
 
 
 if __name__ == "__main__":
