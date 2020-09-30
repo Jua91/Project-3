@@ -3,7 +3,7 @@ from joblib import dump, load
 import numpy as np
 
 app = Flask(__name__)
-model = load('BestLg.joblib')
+model = load('BestRF.joblib')
 
 @app.route("/")
 def home():
