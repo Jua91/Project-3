@@ -14,4 +14,4 @@ We created machine learning models - Logistic Regression, Decision Trees , Rando
 The five most influential factors were free time, age, health status, weekend alcohol consumption, going out with friends, which we later integrated into our final model to make the prediction.
 ## Related Links:
 Link to tableau public : https://public.tableau.com/views/Project-3_15988189818690/StudentPerformanceAnalysis?:language=en&:display_count=y&publish=yes&:origin=viz_share_link
-Link to access the student performance analysis: https://student-data-analysis.herokuapp.com/
+Link to access the student performance analysis: https://stu-performance-prediction.herokuapp.com/summary
